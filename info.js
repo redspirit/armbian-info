@@ -13,7 +13,7 @@ function execlCommand(cmd) {
 
 module.exports = async () => {
 
-    let vpnId = execlCommand("ifconfig tun0").then(stdout => {
+    let vpnId = await execlCommand("ifconfig tun0").then(stdout => {
         let lines = stdout.split('\n').map(item => item.trim());
         let values = lines[1].split(' ');
         return values[1];
