@@ -19,11 +19,19 @@ module.exports = async () => {
         return values[1];
     });
 
+    let mac = await execlCommand("ifconfig -a | grep ether | gawk '{print $2}'").then(stdout => {
+        let lines = stdout.split('\n').map(item => item.trim());
+        return lines[lines.length - 1];
+    });
+
+
     console.log('vpnId', vpnId);
+    console.log('mac', mac);
 
 
     return {
-        ip: vpnId
+        ip: vpnId,
+        mac: mac
     }
 
 };
