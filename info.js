@@ -21,6 +21,7 @@ module.exports = async () => {
 
     let mac = await execlCommand("ifconfig -a | grep ether | gawk '{print $2}'").then(stdout => {
         let lines = stdout.split('\n').map(item => item.trim());
+        console.log(lines);
         return lines[lines.length - 1];
     });
 
