@@ -19,6 +19,7 @@ module.exports = async () => {
         return values[1];
     });
 
+    // need install gawk
     let mac = await execlCommand("ifconfig -a | grep ether | gawk '{print $2}'").then(stdout => {
         let lines = stdout.split('\n').map(item => item.trim()).filter(item => !!item);
         return lines[lines.length - 1];
@@ -30,21 +31,32 @@ module.exports = async () => {
         lines.forEach(line => {
             let values = line.split('=');
             if(values[0] === 'PRETTY_NAME')
-                result = values[1];
+                result = values[1].replace('"', '');
         });
         return result;
+    });
+
+    let mqttTopic = await execlCommand("cat /etc/mosquitto/mosquitto.conf").then(stdout => {
+        let lines = stdout.split('\n').map(item => item.trim()).filter(item => !!item);
+        let values = lines[0].split(' ');
+
+        console.log(values);
+
+        return '';
     });
 
 
     console.log('vpnId', vpnId);
     console.log('mac', mac);
     console.log('modelVersion', modelVersion);
+    console.log('mqttTopic', mqttTopic);
 
 
     return {
         ip: vpnId,
         mac: mac,
         model: modelVersion,
+        topic: mqttTopic,
     }
 
 };
