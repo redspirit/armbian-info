@@ -4,13 +4,12 @@ const getInfo = require('./info');
 
 let updateInfo = () => {
 
-    getInfo((info) => {
+    getInfo().then((info) => {
 
 
+        console.log('Update', info);
 
     });
-
-    console.log('Update');
 
 };
 
