@@ -38,11 +38,8 @@ module.exports = async () => {
 
     let mqttTopic = await execlCommand("cat /etc/mosquitto/mosquitto.conf").then(stdout => {
         let lines = stdout.split('\n').map(item => item.trim()).filter(item => !!item);
-        let values = lines[0].split(' ');
-
-        console.log(values);
-
-        return '';
+        let values = lines[lines.length-1].split(' ');
+        return values[5];
     });
 
 
