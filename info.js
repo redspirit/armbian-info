@@ -39,15 +39,8 @@ module.exports = async () => {
     let mqttTopic = await execlCommand("cat /etc/mosquitto/mosquitto.conf").then(stdout => {
         let lines = stdout.split('\n').map(item => item.trim()).filter(item => !!item);
         let values = lines[lines.length-1].split(' ');
-        return values[5];
+        return values[5].replace('/', '');
     });
-
-
-    console.log('vpnId', vpnId);
-    console.log('mac', mac);
-    console.log('modelVersion', modelVersion);
-    console.log('mqttTopic', mqttTopic);
-
 
     return {
         ip: vpnId,
