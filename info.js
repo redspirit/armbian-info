@@ -24,14 +24,27 @@ module.exports = async () => {
         return lines[lines.length - 1];
     });
 
+    let modelVersion = await execlCommand("cat /etc/os-release").then(stdout => {
+        let lines = stdout.split('\n').map(item => item.trim()).filter(item => !!item);
+        let result = '';
+        lines.forEach(line => {
+            let values = line.split('=');
+            if(values[0] === 'PRETTY_NAME')
+                result = values[1];
+        });
+        return result;
+    });
+
 
     console.log('vpnId', vpnId);
     console.log('mac', mac);
+    console.log('modelVersion', modelVersion);
 
 
     return {
         ip: vpnId,
-        mac: mac
+        mac: mac,
+        model: modelVersion,
     }
 
 };
