@@ -29,7 +29,20 @@ commander.command('topic <name>')
         fs.writeFileSync(confFilePath, newFileText);
 
         console.log('Config updated');
-        
+
+        exec('service mosquitto restart', (error, stdout, stderr) => {
+            if(error)
+                return console.log('Error:', error);
+            console.log('Service restarted');
+        });
+
+    });
+
+commander.command('restart')
+    .alias('r')
+    .description('Restart mosquitto')
+    .action((topic, cmd) => {
+
         exec('service mosquitto restart', (error, stdout, stderr) => {
             if(error)
                 return console.log('Error:', error);
