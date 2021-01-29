@@ -28,13 +28,13 @@ commander.command('topic <name>')
 
         fs.writeFileSync(confFilePath, newFileText);
 
-        exec('service mosquitto restart', (error, stdout, stderr) => {
-            console.log('error', error);
-            console.log('stdout', stdout);
-            console.log('stderr', stderr);
-        });
-
         console.log('Config updated');
+        
+        exec('service mosquitto restart', (error, stdout, stderr) => {
+            if(error)
+                return console.log('Error:', error);
+            console.log('Service restarted');
+        });
 
     });
 
