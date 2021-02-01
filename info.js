@@ -48,14 +48,12 @@ module.exports = async () => {
         return values[4];
     });
 
-    console.log('freeSpace', freeSpace);
-
     return {
         ip: vpnId,
         mac: mac,
         model: modelVersion,
         topic: mqttTopic,
-        space: freeSpace,
+        space: parseInt(freeSpace),
     }
 
 };
