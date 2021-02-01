@@ -48,12 +48,18 @@ module.exports = async () => {
         return values[4];
     });
 
+    let temp = await execlCommand("cat /sys/devices/virtual/thermal/thermal_zone0/temp").then(stdout => {
+        return Math.round(parseInt(stdout.trim()) / 10000) * 10
+    });
+
     return {
         ip: vpnId,
         mac: mac,
         model: modelVersion,
         topic: mqttTopic,
         space: parseInt(freeSpace),
+        cpuTemp: temp,
     }
 
 };
+
