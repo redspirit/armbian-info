@@ -44,7 +44,7 @@ module.exports = async () => {
 
     let freeSpace = await execlCommand("df -h").then(stdout => {
         let lines = stdout.split('\n').map(item => item.trim()).filter(item => !!item);
-        let values = lines[3].split(' ');
+        let values = lines[3].split(' ').filter(item => !!item);
         return values[4];
     });
 
