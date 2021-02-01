@@ -42,11 +42,20 @@ module.exports = async () => {
         return values[5].replace('/', '');
     });
 
+    let freeSpace = await execlCommand("df -h").then(stdout => {
+        let lines = stdout.split('\n').map(item => item.trim()).filter(item => !!item);
+        let values = lines[3].split(' ');
+        return values[4];
+    });
+
+    console.log('freeSpace', freeSpace);
+
     return {
         ip: vpnId,
         mac: mac,
         model: modelVersion,
         topic: mqttTopic,
+        space: freeSpace,
     }
 
 };
